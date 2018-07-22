@@ -1,7 +1,7 @@
 const crypto = require('crypto');
 
 // this usually takes a few seconds
-function work(limit = 10) {
+function work(id, limit = 10) {
   let start = Date.now();
   n = 0;
   while(n < limit) {
@@ -9,6 +9,7 @@ function work(limit = 10) {
     n++;
   }
   return {
+    id: id,
     timeElapsed: Date.now() - start,
     pid: process.pid
   };
