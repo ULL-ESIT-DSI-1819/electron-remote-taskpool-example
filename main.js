@@ -8,12 +8,28 @@ const {app, BrowserWindow} = require("electron");
 const { requireTaskPool } = require('electron-remote');
 const work = requireTaskPool(require.resolve('./work'));
 
+const debug = /--debug/.test(process.argv[2])
+
 let win;
 
 function createWindow() {
   win = new BrowserWindow({width:800, height: 600});
   win.loadFile("index.html")
   //win.loadURL("https://github.com");
+
+  /*
+     let contents = win.webContents
+     console.log(contents)
+  */
+  
+  // Launch fullscreen with DevTools open, usage: npm run debug
+  if (debug) {
+    win.webContents.openDevTools()
+    win.maximize()
+    require('devtron').install()
+  }
+
+
   console.log('start work main pid = ', process.pid);
 
   // `work` will get executed concurrently in separate processes
